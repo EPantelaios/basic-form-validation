@@ -1,7 +1,19 @@
 import { useReducer } from 'react';
 
-const inputStateReducer = (state, action) => {
-  let currentState = {};
+type StateProps = {
+  value: string;
+  isTouched: boolean;
+  validateValue: (value: string) => boolean;
+};
+
+type ActionProps = {
+  type: string;
+  value?: string;
+};
+
+const inputStateReducer = (state: StateProps, action: ActionProps) => {
+  let currentState: StateProps;
+
   if (action.type === 'INPUT') {
     currentState = { ...state, value: action.value };
   } else if (action.type === 'BLUR') {
@@ -23,7 +35,13 @@ const inputStateReducer = (state, action) => {
 };
 
 const useInput = (validateValue) => {
-  const initialStateInput = {
+  const initialStateInput: {
+    value: string;
+    isTouched: boolean;
+    isValid: boolean;
+    hasError: boolean;
+    validateValue: (value: string) => boolean;
+  } = {
     value: '',
     isTouched: false,
     isValid: false,
@@ -36,11 +54,14 @@ const useInput = (validateValue) => {
     initialStateInput
   );
 
-  const valueChangeHandler = (event) => {
-    dispatch({ type: 'INPUT', value: event.target.value });
+  const valueChangeHandler = (event: { target: HTMLInputElement }) => {
+    dispatch({
+      type: 'INPUT',
+      value: event.target.value,
+    });
   };
 
-  const inputBlurHandler = (event) => {
+  const inputBlurHandler = () => {
     dispatch({ type: 'BLUR' });
   };
 

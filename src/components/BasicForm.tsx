@@ -3,10 +3,10 @@ import './BasicForm.css';
 
 const mailFormat =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const isEmail = (value) => value.match(mailFormat) || false;
-const isNotEmpty = (value) => value.trim() !== '';
+const isEmail = (value: string) => value.match(mailFormat) || false;
+const isNotEmpty = (value: string) => value.trim() !== '';
 
-const BasicForm = (props) => {
+const BasicForm = () => {
   const {
     value: firstNameValue,
     isValid: firstNameIsValid,
