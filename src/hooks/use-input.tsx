@@ -3,6 +3,8 @@ import { useReducer } from 'react';
 type StateProps = {
   value: string;
   isTouched: boolean;
+  isValid: boolean;
+  hasError: boolean;
   validateValue: (value: string) => boolean;
 };
 
@@ -11,7 +13,10 @@ type ActionProps = {
   value?: string;
 };
 
-const inputStateReducer = (state: StateProps, action: ActionProps) => {
+const inputStateReducer = (
+  state: StateProps,
+  action: ActionProps
+): StateProps => {
   let currentState: StateProps;
 
   if (action.type === 'INPUT') {
@@ -34,14 +39,8 @@ const inputStateReducer = (state: StateProps, action: ActionProps) => {
   return { ...currentState, isValid: isValid, hasError: hasError };
 };
 
-const useInput = (validateValue) => {
-  const initialStateInput: {
-    value: string;
-    isTouched: boolean;
-    isValid: boolean;
-    hasError: boolean;
-    validateValue: (value: string) => boolean;
-  } = {
+const useInput = (validateValue: StateProps['validateValue']) => {
+  const initialStateInput: StateProps = {
     value: '',
     isTouched: false,
     isValid: false,
